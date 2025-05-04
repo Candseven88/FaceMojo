@@ -91,16 +91,22 @@ export function UserTips() {
           ))}
         </div>
       </div>
-      <div className="mt-16 text-center">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        viewport={{ once: true }}
+        className="mt-16 text-center"
+      >
         <a
-          href="https://forms.gle/M9Ntgq83VWvQUeKd6"
+          href="https://forms.gle/CfC5reB4vKtJ2VXx9"
           target="_blank"
           rel="noopener noreferrer"
-          className="px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-500 text-white font-semibold rounded-lg hover:opacity-90 transition"
+          className="inline-block px-6 py-3 rounded-md bg-gradient-to-r from-purple-600 to-pink-600 text-white hover:scale-105 transition-all duration-300 font-semibold text-sm shadow-lg shadow-purple-900/20"
         >
           💬 Help Us Improve FaceMojo
         </a>
-      </div>
+      </motion.div>
     </section>
   )
 }
