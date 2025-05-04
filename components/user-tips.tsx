@@ -92,29 +92,14 @@ export function UserTips() {
         </div>
       </div>
       <div className="mt-16 text-center">
-        <button
-          onClick={() => setShowFeedback(!showFeedback)}
-          className="px-6 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-md text-sm transition"
+        <a
+          href="https://forms.gle/M9Ntgq83VWvQUeKd6"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-500 text-white font-semibold rounded-lg hover:opacity-90 transition"
         >
-          {showFeedback ? "Close Feedback Panel" : "💬 Help Us Improve FaceMojo"}
-        </button>
-
-        {showFeedback && (
-          <div className="mt-8 max-w-4xl mx-auto">
-            <iframe
-              src="https://forms.gle/M9Ntgq83VWvQUeKd6"
-              width="100%"
-              height="700"
-              frameBorder="0"
-              marginHeight={0}
-              marginWidth={0}
-              title="FaceMojo Feedback Form"
-              className="rounded-lg border border-purple-500/30 shadow-lg"
-            >
-              Loading…
-            </iframe>
-          </div>
-        )}
+          💬 Help Us Improve FaceMojo
+        </a>
       </div>
     </section>
   )
