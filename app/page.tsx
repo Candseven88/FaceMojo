@@ -55,8 +55,8 @@ export default function Home() {
         <UploadFlow />
         <HowItWorks />
         <DemoPlaceholder />
-        <TechSpecs />
         <UseCases />
+        <TechSpecs />
         <UserTips />
 
         {showFAQ && (
