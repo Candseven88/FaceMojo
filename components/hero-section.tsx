@@ -101,11 +101,9 @@ export function HeroSection() {
           >
             <div className="relative rounded-2xl overflow-hidden border border-purple-500/30 shadow-2xl shadow-purple-500/20 bg-gradient-to-br from-gray-900 to-purple-900/50">
               <div className="absolute inset-0 bg-grid-white/[0.05] bg-[size:20px_20px]"></div>
-              <Image
-                src="/images/facemojo-demo.png"
+              <img
+                src="/images/facemojo-demo.gif"
                 alt="FaceMojo AI Animation Demo"
-                width={600}
-                height={400}
                 className="w-full h-auto"
               />
 

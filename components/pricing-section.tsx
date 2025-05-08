@@ -7,8 +7,10 @@ import { useToast } from "@/hooks/use-toast"
 
 export function PricingSection() {
   const { toast } = useToast()
+
   return (
     <section id="pricing" className="py-20 md:py-28 relative">
+      {/* Background Glow */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-purple-900/20 via-transparent to-transparent"></div>
       </div>
@@ -24,130 +26,142 @@ export function PricingSection() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {/* Free Plan */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            viewport={{ once: true }}
-            className="bg-gray-900/80 backdrop-blur-md rounded-2xl border border-gray-800 overflow-hidden"
-          >
-            <div className="p-8">
-              <h3 className="text-xl font-bold text-white mb-2">Free Trial</h3>
-              <p className="text-gray-400 mb-6">Try 1 animation for free</p>
-              <div className="flex items-baseline mb-8">
-                <span className="text-4xl font-bold text-white">$0</span>
-                <span className="text-gray-400 ml-2">/ one-time</span>
-              </div>
-              <button
-                onClick={() => {
-                  if (localStorage.getItem("freeTrialUsed")) {
-                    toast({
-                      title: "Trial already used",
-                      description: "You’ve already used your free trial.",
-                    });
-                    return;
-                  } else {
-                    localStorage.setItem("freeTrialUsed", "true");
-                    const target = document.getElementById("features");
-                    if (target) {
-                      target.scrollIntoView({ behavior: "smooth" });
-                    } else {
-                      window.location.href = "/#features";
-                    }
-                  }
-                }}
-                className="w-full block text-center bg-gray-800 hover:bg-gray-700 text-white px-4 py-2 rounded-lg mb-8"
-              >
-                Try Free
-              </button>
-              <ul className="space-y-4">
-                <PricingFeature included>1 animation only</PricingFeature>
-                <PricingFeature included>Standard quality (512×512)</PricingFeature>
-                <PricingFeature included>FaceMojo watermark</PricingFeature>
-                <PricingFeature>Priority processing</PricingFeature>
-              </ul>
-            </div>
-          </motion.div>
+          {/* Free Trial */}
+          <PricingCard
+            title="Free Trial"
+            subtitle="Try 1 animation for free"
+            price="$0"
+            priceUnit="/ one-time"
+            buttonText="Try Free"
+            onClick={() => {
+              if (localStorage.getItem("freeTrialUsed")) {
+                toast({ title: "Trial already used", description: "You’ve already used your free trial." })
+              } else {
+                localStorage.setItem("freeTrialUsed", "true")
+                toast({ title: "Free Trial Activated", description: "You can now generate 1 animation." })
+              }
+            }}
+            features={[
+              "1 animation only",
+              "Standard quality (512×512)",
+              "FaceMojo watermark",
+              { label: "Priority processing", included: false },
+            ]}
+            highlight=""
+          />
 
           {/* Basic Plan */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            viewport={{ once: true }}
-            className="bg-gradient-to-b from-gray-900 to-gray-900/90 rounded-2xl border border-purple-500/50 overflow-hidden relative transform md:scale-105 md:-translate-y-2 shadow-xl shadow-purple-700/10"
-          >
-            <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-purple-400 via-pink-500 to-cyan-400"></div>
-            <div className="absolute top-4 right-4">
-              <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-cyan-500/20 text-cyan-300">
-                Recommended
-              </span>
-            </div>
-            <div className="p-8">
-              <h3 className="text-xl font-bold text-white mb-2">Basic</h3>
-              <p className="text-gray-400 mb-6">10 animations / month</p>
-              <div className="flex items-baseline mb-8">
-                <span className="text-4xl font-bold text-white">$5</span>
-                <span className="text-gray-400 ml-2">/ month</span>
-              </div>
-              <a
-                href="https://www.creem.io/payment/prod_FDwwEsjdqfy6bQ6MZ4T0p"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full block text-center bg-gradient-to-r from-purple-600 to-cyan-600 hover:from-purple-700 hover:to-cyan-700 text-white px-4 py-2 rounded-lg mb-8"
-              >
-                Subscribe
-              </a>
-              <ul className="space-y-4">
-                <PricingFeature included>10 animations / month</PricingFeature>
-                <PricingFeature included>Enhanced quality (optimized for mobile)</PricingFeature>
-                <PricingFeature included>No watermark</PricingFeature>
-                <PricingFeature included>Priority processing</PricingFeature>
-              </ul>
-            </div>
-          </motion.div>
+          <PricingCard
+            title="Basic"
+            subtitle="10 animations / month"
+            price="$5"
+            priceUnit="/ month"
+            buttonText="Upgrade to Basic"
+            onClick={() => {
+              localStorage.setItem("userPlan", "basic")
+              window.location.href = "https://www.creem.io/payment/prod_FDwwEsjdqfy6bQ6MZ4T0p"
+            }}
+            features={[
+              "10 animations / month",
+              "Enhanced quality (optimized for mobile)",
+              "No watermark",
+              "Priority processing",
+            ]}
+            highlight="Recommended"
+          />
 
           {/* Pro Plan */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-            viewport={{ once: true }}
-            className="bg-gray-900/80 backdrop-blur-md rounded-2xl border border-gray-800 overflow-hidden"
-          >
-            <div className="p-8">
-              <div className="absolute top-4 right-4">
-                <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-yellow-500/20 text-yellow-300">
-                  Best Value
-                </span>
-              </div>
-              <h3 className="text-xl font-bold text-white mb-2">Pro</h3>
-              <p className="text-gray-400 mb-6">50 animations / month</p>
-              <div className="flex items-baseline mb-8">
-                <span className="text-4xl font-bold text-white">$15</span>
-                <span className="text-gray-400 ml-2">/ month</span>
-              </div>
-              <a
-                href="https://www.creem.io/payment/prod_7GcWnmwWJ9vqqO8LirnCCA"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full block text-center bg-gray-800 hover:bg-gray-700 text-white px-4 py-2 rounded-lg mb-8"
-              >
-                Subscribe
-              </a>
-              <ul className="space-y-4">
-                <PricingFeature included>50 animations / month</PricingFeature>
-                <PricingFeature included>Best quality + priority rendering</PricingFeature>
-                <PricingFeature included>No watermark</PricingFeature>
-                <PricingFeature included>Priority processing</PricingFeature>
-                <PricingFeature included>API access (coming soon)</PricingFeature>
-              </ul>
-            </div>
-          </motion.div>
+          <PricingCard
+            title="Pro"
+            subtitle="50 animations / month"
+            price="$15"
+            priceUnit="/ month"
+            buttonText="Upgrade to Pro"
+            onClick={() => {
+              localStorage.setItem("userPlan", "pro")
+              window.location.href = "https://www.creem.io/payment/prod_7GcWnmwWJ9vqqO8LirnCCA"
+            }}
+            features={[
+              "50 animations / month",
+              "Best quality + priority rendering",
+              "No watermark",
+              "Priority processing",
+              "API access (coming soon)",
+            ]}
+            highlight="Best Value"
+          />
         </div>
       </div>
     </section>
+  )
+}
+
+function PricingCard({
+  title,
+  subtitle,
+  price,
+  priceUnit,
+  buttonText,
+  onClick,
+  features,
+  highlight,
+}: {
+  title: string
+  subtitle: string
+  price: string
+  priceUnit: string
+  buttonText: string
+  onClick: () => void
+  features: (string | { label: string; included: boolean })[]
+  highlight?: string
+}) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      viewport={{ once: true }}
+      className={`bg-gray-900/80 backdrop-blur-md rounded-2xl border border-gray-800 overflow-hidden relative ${highlight === "Recommended" ? "border-cyan-500/50 shadow-lg shadow-cyan-500/20" : ""
+        } ${highlight === "Best Value" ? "border-yellow-400/40 shadow-lg shadow-yellow-400/10" : ""}`}
+    >
+      {highlight && (
+        <div className="absolute top-4 right-4">
+          <span
+            className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium ${highlight === "Recommended"
+                ? "bg-cyan-500/20 text-cyan-300"
+                : "bg-yellow-500/20 text-yellow-300"
+              }`}
+          >
+            {highlight}
+          </span>
+        </div>
+      )}
+      <div className="p-8">
+        <h3 className="text-xl font-bold text-white mb-2">{title}</h3>
+        <p className="text-gray-400 mb-6">{subtitle}</p>
+        <div className="flex items-baseline mb-8">
+          <span className="text-4xl font-bold text-white">{price}</span>
+          <span className="text-gray-400 ml-2">{priceUnit}</span>
+        </div>
+        <button
+          onClick={onClick}
+          className={`w-full block text-center px-4 py-2 rounded-lg mb-8 text-white ${(highlight === "Recommended" || highlight === "Best Value")
+              ? "bg-gradient-to-r from-purple-600 to-cyan-600 hover:from-purple-700 hover:to-cyan-700 border-0 shadow-lg shadow-purple-700/20"
+              : "bg-gray-800 hover:bg-gray-700"
+            }`}
+        >
+          {buttonText}
+        </button>
+        <ul className="space-y-4">
+          {features.map((feature, idx) => {
+            if (typeof feature === "string") {
+              return <PricingFeature key={idx} included>{feature}</PricingFeature>
+            }
+            return <PricingFeature key={idx} included={feature.included}>{feature.label}</PricingFeature>
+          })}
+        </ul>
+      </div>
+    </motion.div>
   )
 }
 
@@ -179,3 +193,4 @@ function PricingFeature({ children, included = false }: { children: React.ReactN
     </li>
   )
 }
+export { PricingCard }

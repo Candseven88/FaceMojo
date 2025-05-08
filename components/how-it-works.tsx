@@ -5,6 +5,7 @@ import { Upload, Sparkles, Download, Share2 } from "lucide-react"
 import Image from "next/image"
 
 export function HowItWorks() {
+  const timestamp = Date.now()
   const steps = [
     {
       icon: <Upload className="h-8 w-8" />,
@@ -16,19 +17,19 @@ export function HowItWorks() {
       icon: <Sparkles className="h-8 w-8" />,
       title: "Animate",
       description: "Our AI works its magic to bring your photo to life",
-      image: "/images/animate-step.png",
+      image: `/images/animate-step.gif?t=${timestamp}`,
     },
     {
       icon: <Download className="h-8 w-8" />,
       title: "Download",
       description: "Save your animation to share with friends",
-      image: "/images/download-step.png",
+      image: `/images/download-step.gif?t=${timestamp}`,
     },
     {
       icon: <Share2 className="h-8 w-8" />,
       title: "Share",
       description: "Post your creation on social media",
-      image: "/images/share-step.png",
+      image: `/images/share-step.gif?t=${timestamp}`,
     },
   ]
 
@@ -78,9 +79,12 @@ export function HowItWorks() {
               </div>
 
               {/* Step image */}
-              <div className="relative w-full h-40 mb-4 rounded-lg overflow-hidden border border-purple-500/30 shadow-lg shadow-purple-700/10">
-                <Image src={step.image || "/placeholder.svg"} alt={step.title} fill className="object-cover" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
+              <div className="relative w-full h-[220px] mb-4 rounded-lg overflow-hidden border border-purple-500/30 shadow-lg shadow-purple-700/10 flex items-center justify-center bg-black">
+                <img
+                  src={step.image || "/placeholder.svg"}
+                  alt={step.title}
+                  className="object-contain max-h-full w-full h-full"
+                />
               </div>
 
               <h3 className="text-xl font-semibold mb-2 text-white">{step.title}</h3>

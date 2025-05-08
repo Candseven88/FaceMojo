@@ -66,8 +66,9 @@ export function UseCases() {
                   <Image
                     src={useCase.image || "/placeholder.svg"}
                     alt={useCase.title}
-                    fill
-                    className="object-cover transition-transform duration-500 hover:scale-110"
+                    width={320}
+                    height={180}
+                    className="object-contain w-full h-full bg-black rounded-t-lg"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent"></div>
 
@@ -112,13 +113,13 @@ export function UseCases() {
               can't believe it's generated from a single photo!
             </p>
             <div className="flex items-center justify-center">
-              <div className="w-12 h-12 rounded-full overflow-hidden mr-4 border-2 border-purple-500">
+              <div className="w-12 h-12 rounded-full overflow-hidden mr-4 border-2 border-purple-500 bg-black flex items-center justify-center">
                 <Image
                   src="/images/testimonial-avatar.png"
                   alt="Sarah Johnson"
                   width={48}
                   height={48}
-                  className="object-cover"
+                  className="object-contain"
                 />
               </div>
               <div className="text-left">

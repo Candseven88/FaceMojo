@@ -64,7 +64,7 @@ export function UserTips() {
               viewport={{ once: true }}
               className="flex items-center bg-black/50 backdrop-blur-sm rounded-xl border border-purple-500/30 p-4 shadow-lg shadow-purple-700/10 overflow-hidden"
             >
-              <div className="w-16 h-16 rounded-lg overflow-hidden mr-4 flex-shrink-0 border border-purple-500/30">
+              <div className="w-28 h-28 rounded-lg overflow-hidden mr-4 flex-shrink-0 border border-purple-500/30">
                 <Image
                   src={tip.image || "/placeholder.svg"}
                   alt={`Tip ${index + 1}`}
@@ -99,7 +99,7 @@ export function UserTips() {
         className="mt-16 text-center"
       >
         <a
-          href="https://forms.gle/CfC5reB4vKtJ2VXx9"
+          href="https://docs.google.com/forms/d/e/1FAIpQLSermFAkp6UU0Us3cD464W4KyrQmX-LRpwMwf65TC_KZ-F2LJA/viewform"
           target="_blank"
           rel="noopener noreferrer"
           className="inline-block px-6 py-3 rounded-md bg-gradient-to-r from-purple-600 to-pink-600 text-white hover:scale-105 transition-all duration-300 font-semibold text-sm shadow-lg shadow-purple-900/20"

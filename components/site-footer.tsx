@@ -59,18 +59,18 @@ export function SiteFooter() {
                     </a>
                   </li>
                   <li>
-                    <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                      Careers
+                    <a href="#faq" className="text-gray-400 hover:text-white transition-colors">
+                      FAQ
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#terms" className="text-gray-400 hover:text-white transition-colors">
+                      Terms & Privacy
                     </a>
                   </li>
                   <li>
                     <a href="#" className="text-gray-400 hover:text-white transition-colors">
                       Blog
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                      Press
                     </a>
                   </li>
                 </ul>
