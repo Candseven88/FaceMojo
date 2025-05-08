@@ -1,11 +1,11 @@
 "use client"
 
-import { useEffect } from "react"
+import { Suspense, useEffect } from "react"
 import { useSearchParams, useRouter } from "next/navigation"
 import { doc, setDoc } from "firebase/firestore"
 import { db, auth } from "@/lib/firebase"
 
-export default function CheckoutPage() {
+function CheckoutHandler() {
   const searchParams = useSearchParams()
   const router = useRouter()
 
@@ -20,9 +20,7 @@ export default function CheckoutPage() {
           const user = auth.currentUser
           if (user) {
             const subscriptionRef = doc(db, "userSubscriptions", user.uid)
-            let animations = 1
-            if (plan === "basic") animations = 10
-            if (plan === "pro") animations = 50
+            let animations = plan === "basic" ? 10 : 50
 
             await setDoc(subscriptionRef, {
               plan,
@@ -53,5 +51,13 @@ export default function CheckoutPage() {
         <p className="text-lg">Thank you for upgrading. You will be redirected shortly...</p>
       </div>
     </div>
+  )
+}
+
+export default function CheckoutPage() {
+  return (
+    <Suspense fallback={<div className="text-white text-center py-20">Loading...</div>}>
+      <CheckoutHandler />
+    </Suspense>
   )
 }
