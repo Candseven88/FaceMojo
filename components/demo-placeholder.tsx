@@ -66,29 +66,15 @@ export function DemoPlaceholder() {
                 <div className="h-full w-full bg-[linear-gradient(to_right,#4f4f4f11_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f11_1px,transparent_1px)] bg-[size:24px_24px]"></div>
               </div>
 
-              <div className="text-center z-10">
-                <div className="relative inline-block">
-                  <motion.div
-                    animate={{
-                      scale: [1, 1.1, 1],
-                      boxShadow: [
-                        "0 0 0 0 rgba(168, 85, 247, 0.4)",
-                        "0 0 0 20px rgba(168, 85, 247, 0)",
-                        "0 0 0 0 rgba(168, 85, 247, 0)",
-                      ],
-                    }}
-                    transition={{
-                      duration: 2,
-                      repeat: Number.POSITIVE_INFINITY,
-                      repeatType: "reverse",
-                    }}
-                    className="w-24 h-24 rounded-full bg-black/50 backdrop-blur-md flex items-center justify-center border border-purple-500/50"
-                  >
-                    <Play className="h-10 w-10 text-purple-400 fill-purple-400/30" />
-                  </motion.div>
-                </div>
-                <h3 className="mt-6 text-xl font-semibold text-white">Real-time Demo Coming Soon</h3>
-                <p className="mt-2 text-gray-300">We're putting the finishing touches on our interactive demo</p>
+              <div className="relative w-full max-w-4xl mx-auto aspect-video bg-black rounded-xl overflow-hidden shadow-lg border border-purple-500/30">
+                <video
+                  src="/demo.mp4"
+                  controls
+                  autoPlay
+                  muted
+                  loop
+                  className="absolute inset-0 w-full h-full object-contain"
+                />
               </div>
 
               {/* Tech floating elements */}

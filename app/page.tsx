@@ -11,7 +11,6 @@ import { UserTips } from "@/components/user-tips"
 import { SiteFooter } from "@/components/site-footer"
 import { FAQSection } from "@/components/faq-section"
 import { TechSpecs } from "@/components/tech-specs"
-import { TermsPrivacySection } from "@/components/terms-privacy-section"
 
 export default function Home() {
   const [showFAQ, setShowFAQ] = useState(false)
@@ -65,13 +64,6 @@ export default function Home() {
           </div>
         )}
       </main>
-
-      {showTerms && (
-        <div ref={termsRef}>
-          <TermsPrivacySection />
-        </div>
-      )}
-
       <SiteFooter />
     </div>
   )

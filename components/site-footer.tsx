@@ -54,23 +54,23 @@ export function SiteFooter() {
                 <h3 className="text-white font-semibold mb-4">Company</h3>
                 <ul className="space-y-2">
                   <li>
-                    <a href="#" className="text-gray-400 hover:text-white transition-colors">
+                    <a href="/about" className="text-gray-400 hover:text-white transition-colors">
                       About Us
                     </a>
                   </li>
                   <li>
-                    <a href="#faq" className="text-gray-400 hover:text-white transition-colors">
+                    <a href="/faq" className="text-gray-400 hover:text-white transition-colors">
                       FAQ
                     </a>
                   </li>
                   <li>
-                    <a href="#terms" className="text-gray-400 hover:text-white transition-colors">
+                    <a href="/terms" className="text-gray-400 hover:text-white transition-colors">
                       Terms & Privacy
                     </a>
                   </li>
                   <li>
-                    <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                      Blog
+                    <a href="/contact" className="text-gray-400 hover:text-white transition-colors">
+                      Contact
                     </a>
                   </li>
                 </ul>
@@ -128,10 +128,10 @@ export function SiteFooter() {
             </div>
 
             <div className="flex space-x-6">
-              <a href="#" className="text-sm text-gray-500 hover:text-gray-300 transition-colors">
+              <a href="/terms" className="text-sm text-gray-500 hover:text-gray-300 transition-colors">
                 Terms of Service
               </a>
-              <a href="#" className="text-sm text-gray-500 hover:text-gray-300 transition-colors">
+              <a href="/terms" className="text-sm text-gray-500 hover:text-gray-300 transition-colors">
                 Privacy Policy
               </a>
             </div>

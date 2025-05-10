@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import './globals.css'
-
+import { Header } from '@/components/header' // ✅ 加上 header
 
 export const metadata: Metadata = {
   title: 'FaceMojo',
@@ -22,8 +22,9 @@ export default function RootLayout({
         <meta property="og:url" content="https://facemojo.ai" />
         <meta name="twitter:card" content="summary_large_image" />
       </head>
-      <body>
-        {children}
+      <body className="min-h-screen bg-gradient-to-b from-gray-900 via-purple-900 to-gray-900 text-white">
+        <Header /> {/* ✅ 添加头部导航 */}
+        <main>{children}</main>
       </body>
     </html>
   )
