@@ -98,14 +98,17 @@ export function UserTips() {
         viewport={{ once: true }}
         className="mt-16 text-center"
       >
-        <a
-          href="https://docs.google.com/forms/d/e/1FAIpQLSermFAkp6UU0Us3cD464W4KyrQmX-LRpwMwf65TC_KZ-F2LJA/viewform"
-          target="_blank"
-          rel="noopener noreferrer"
+        <button
+          onClick={() =>
+            window.open(
+              "https://docs.google.com/forms/d/e/1FAIpQLSermFAkp6UU0Us3cD464W4KyrQmX-LRpwMwf65TC_KZ-F2LJA/viewform",
+              "_blank"
+            )
+          }
           className="inline-block px-6 py-3 rounded-md bg-gradient-to-r from-purple-600 to-pink-600 text-white hover:scale-105 transition-all duration-300 font-semibold text-sm shadow-lg shadow-purple-900/20"
         >
           💬 Help Us Improve FaceMojo
-        </a>
+        </button>
       </motion.div>
     </section>
   )
