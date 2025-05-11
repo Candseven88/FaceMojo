@@ -11,6 +11,7 @@ import { UserTips } from "@/components/user-tips"
 import { SiteFooter } from "@/components/site-footer"
 import { FAQSection } from "@/components/faq-section"
 import { TechSpecs } from "@/components/tech-specs"
+import { LivePortraitEmbed } from "@/components/LivePortraitEmbed"
 
 export default function Home() {
   const [showFAQ, setShowFAQ] = useState(false)
@@ -54,6 +55,8 @@ export default function Home() {
         <UploadFlow />
         <HowItWorks />
         <DemoPlaceholder />
+        {/* 嵌入 Hugging Face LivePortrait 模块 */}
+        <LivePortraitEmbed src="https://han-123-liveportrait.hf.space" />
         <UseCases />
         <TechSpecs />
         <UserTips />
