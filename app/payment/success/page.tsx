@@ -1,16 +1,13 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { getAuth } from 'firebase/auth';
 import { updateUserPlan } from '@/firebase/userPlans';
 import { upgradeUsageStatsForPaidUser } from '@/firebase/usage';
 
-/**
- * Payment Success Page
- * This page handles the return from Creem payment system
- */
-export default function PaymentSuccessPage() {
+// 创建一个包含 useSearchParams 的组件
+function PaymentProcessor() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [status, setStatus] = useState<'processing' | 'success' | 'error'>('processing');
@@ -117,5 +114,30 @@ export default function PaymentSuccessPage() {
         )}
       </div>
     </div>
+  );
+}
+
+// 加载状态的占位UI
+function LoadingPaymentPage() {
+  return (
+    <div className="container mx-auto max-w-md py-12">
+      <div className="bg-white rounded-xl shadow-lg p-8 text-center">
+        <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-blue-500 mx-auto mb-4"></div>
+        <h1 className="text-2xl font-bold mb-4">加载中...</h1>
+        <p className="text-gray-600">请稍候，正在加载支付信息</p>
+      </div>
+    </div>
+  );
+}
+
+/**
+ * Payment Success Page
+ * This page handles the return from Creem payment system
+ */
+export default function PaymentSuccessPage() {
+  return (
+    <Suspense fallback={<LoadingPaymentPage />}>
+      <PaymentProcessor />
+    </Suspense>
   );
 } 

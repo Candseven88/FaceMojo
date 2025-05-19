@@ -1,6 +1,8 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
-export async function GET(request: Request) {
+export const dynamic = 'force-dynamic'; // 指定这是一个动态API路由
+
+export async function GET(request: NextRequest) {
   console.log("API请求开始: check-prediction");
   try {
     // 检查API令牌是否设置
@@ -13,7 +15,8 @@ export async function GET(request: Request) {
       );
     }
 
-    const { searchParams } = new URL(request.url);
+    // 使用 NextRequest 的 nextUrl 属性替代 request.url
+    const searchParams = request.nextUrl.searchParams;
     const id = searchParams.get('id');
 
     console.log(`检查预测ID: ${id}`);
