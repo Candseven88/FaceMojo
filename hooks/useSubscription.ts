@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { User } from 'firebase/auth';
-import { updateUserPlan, getUserPlan, PlanType } from '../firebase/userPlans';
-import { upgradeUsageStatsForPaidUser, getRemainingAnimations, getUserUsage } from '../firebase/usage';
+import { updateUserPlan, getUserPlan, PlanType } from '@/firebase/userPlans';
+import { upgradeUsageStatsForPaidUser, getRemainingAnimations, getUserUsage } from '@/firebase/usage';
 
 interface SubscriptionState {
   loading: boolean;

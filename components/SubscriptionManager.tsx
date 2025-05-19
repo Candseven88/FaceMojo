@@ -1,9 +1,9 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useSubscription } from '../hooks/useSubscription';
-import { useAuth } from '../hooks/useAuth';
-import { PlanType, updateUserPlan } from '../firebase/userPlans';
+import { useSubscription } from '@/hooks/useSubscription';
+import { useAuth } from '@/hooks/useAuth';
+import { PlanType, updateUserPlan } from '@/firebase/userPlans';
 import CreemCheckoutButton from './CreemCheckoutButton';
 
 interface SubscriptionManagerProps {

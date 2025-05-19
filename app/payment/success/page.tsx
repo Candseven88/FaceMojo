@@ -3,8 +3,8 @@
 import { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { getAuth } from 'firebase/auth';
-import { updateUserPlan } from '../../../firebase/userPlans';
-import { upgradeUsageStatsForPaidUser } from '../../../firebase/usage';
+import { updateUserPlan } from '@/firebase/userPlans';
+import { upgradeUsageStatsForPaidUser } from '@/firebase/usage';
 
 /**
  * Payment Success Page

@@ -2,10 +2,10 @@
 
 import { useState, useRef, ChangeEvent, FormEvent, useEffect } from 'react';
 import Image from 'next/image';
-import { useAuth } from '../hooks/useAuth';
-import SubscriptionManager from '../components/SubscriptionManager';
+import { useAuth } from '@/hooks/useAuth';
+import SubscriptionManager from '@/components/SubscriptionManager';
 import { getAuth } from 'firebase/auth';
-import { getUserUsage } from '../firebase/usage';
+import { getUserUsage } from '@/firebase/usage';
 import Link from 'next/link';
 
 interface PredictionResponse {
