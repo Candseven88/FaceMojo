@@ -1,10 +1,19 @@
 import { useState, useEffect } from 'react';
 import { User } from 'firebase/auth';
-import { signInAnonymousUser, getCurrentUser, authListener } from '../firebase/auth';
-import { getUserUsage, canGenerateThisWeek, saveUsageLimitToLocalStorage, getUsageLimitFromLocalStorage } from '../firebase/usage';
+import { 
+  signInAnonymousUser, 
+  getCurrentUser, 
+  authListener 
+} from '../lib/firebase/auth';
+import { 
+  getUserUsage, 
+  canGenerateThisWeek, 
+  saveUsageLimitToLocalStorage,
+  getUsageLimitFromLocalStorage
+} from '../lib/firebase/usage';
 import { serverTimestamp, doc, setDoc, Timestamp } from 'firebase/firestore';
-import { db } from '../firebase/config';
-import { getUserPlan, updateUserPlan, PlanType } from '../firebase/userPlans';
+import { db } from '../lib/firebase/config';
+import { getUserPlan, updateUserPlan, PlanType } from '../lib/firebase/userPlans';
 import { upgradeUsageStatsForPaidUser } from '../lib/firebase/usage';
 
 interface AuthState {
