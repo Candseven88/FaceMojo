@@ -4,17 +4,17 @@ import {
   signInAnonymousUser, 
   getCurrentUser, 
   authListener 
-} from '@/firebase/auth';
+} from '../firebase/auth';
 import { 
   getUserUsage, 
   canGenerateThisWeek, 
   saveUsageLimitToLocalStorage,
   getUsageLimitFromLocalStorage
-} from '@/firebase/usage';
+} from '../firebase/usage';
 import { serverTimestamp, doc, setDoc, Timestamp } from 'firebase/firestore';
-import { db } from '@/firebase/config';
-import { getUserPlan, updateUserPlan, PlanType } from '@/firebase/userPlans';
-import { upgradeUsageStatsForPaidUser } from '@/firebase/usage';
+import { db } from '../firebase/config';
+import { getUserPlan, updateUserPlan, PlanType } from '../firebase/userPlans';
+import { upgradeUsageStatsForPaidUser } from '../firebase/usage';
 
 interface AuthState {
   user: User | null;
