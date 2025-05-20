@@ -17,6 +17,20 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="scroll-smooth">
+      <head>
+    {/* Google Analytics - Global Site Tag (gtag.js) */}
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-9R6KHMKVNP"></script>
+    <script
+      dangerouslySetInnerHTML={{
+        __html: `
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-9R6KHMKVNP');
+        `,
+      }}
+    />
+  </head>
       <body className={`${inter.variable} ${spaceGrotesk.variable} font-sans min-h-screen`}>
         {children}
       </body>
