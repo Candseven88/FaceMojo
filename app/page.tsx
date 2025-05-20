@@ -160,14 +160,14 @@ export default function Home() {
     }
 
     // 检查文件大小限制
-    const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB 限制
+    const MAX_FILE_SIZE = 20 * 1024 * 1024; // 20MB 限制
     if (portraitImage.size > MAX_FILE_SIZE) {
-      setError(`Portrait image is too large. Maximum size is 5MB, your file is ${(portraitImage.size / (1024 * 1024)).toFixed(2)}MB`);
+      setError(`Portrait image is too large. Maximum size is 20MB, your file is ${(portraitImage.size / (1024 * 1024)).toFixed(2)}MB`);
       return;
     }
 
     if (drivingVideo.size > MAX_FILE_SIZE) {
-      setError(`Driving video is too large. Maximum size is 5MB, your file is ${(drivingVideo.size / (1024 * 1024)).toFixed(2)}MB`);
+      setError(`Driving video is too large. Maximum size is 20MB, your file is ${(drivingVideo.size / (1024 * 1024)).toFixed(2)}MB`);
       return;
     }
 
