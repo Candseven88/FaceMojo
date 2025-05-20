@@ -406,6 +406,13 @@ export default function Home() {
             <div className="text-center mb-10">
               <h2 className="section-title">Try It Now</h2>
               <p className="section-subtitle">Upload your photo and start animating</p>
+              <div className="mt-6 max-w-2xl mx-auto rounded-lg overflow-hidden shadow-xl border border-slate-700/50">
+                <img 
+                  src="/howto-preview.gif" 
+                  alt="How to use FaceMojo - Step by step example" 
+                  className="w-full h-auto"
+                />
+              </div>
             </div>
 
             <div className="glass-card border border-slate-700/50 shadow-xl">
