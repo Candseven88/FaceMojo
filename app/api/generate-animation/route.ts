@@ -1,6 +1,17 @@
 import { NextResponse } from 'next/server';
 
-const MAX_BASE64_SIZE = 20 * 1024 * 1024; // 20MB 限制
+// 设置更长的超时时间和更大的请求体积限制
+export const config = {
+  api: {
+    bodyParser: {
+      sizeLimit: '30mb' // 增加到30MB
+    },
+    responseLimit: false
+  },
+  maxDuration: 60 // 60秒超时
+};
+
+const MAX_BASE64_SIZE = 10 * 1024 * 1024; // 减少到10MB限制
 
 export async function POST(request: Request) {
   console.log("API请求开始: generate-animation");
@@ -52,7 +63,7 @@ export async function POST(request: Request) {
     if (image.length > MAX_BASE64_SIZE || video.length > MAX_BASE64_SIZE) {
       console.error('文件大小超出限制');
       return new NextResponse(
-        JSON.stringify({ error: 'File size exceeds the limit (20MB)' }),
+        JSON.stringify({ error: 'File size exceeds the limit (10MB)' }),
         {
           status: 413,
           headers: { 'Content-Type': 'application/json' }
