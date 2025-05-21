@@ -160,14 +160,14 @@ export default function Home() {
     }
 
     // 检查文件大小限制
-    const MAX_FILE_SIZE = 20 * 1024 * 1024; // 20MB 限制
+    const MAX_FILE_SIZE = 10 * 1024 * 1024; // 减少到10MB限制
     if (portraitImage.size > MAX_FILE_SIZE) {
-      setError(`Portrait image is too large. Maximum size is 20MB, your file is ${(portraitImage.size / (1024 * 1024)).toFixed(2)}MB`);
+      setError(`Portrait image is too large. Maximum size is 10MB, your file is ${(portraitImage.size / (1024 * 1024)).toFixed(2)}MB`);
       return;
     }
 
     if (drivingVideo.size > MAX_FILE_SIZE) {
-      setError(`Driving video is too large. Maximum size is 20MB, your file is ${(drivingVideo.size / (1024 * 1024)).toFixed(2)}MB`);
+      setError(`Driving video is too large. Maximum size is 10MB, your file is ${(drivingVideo.size / (1024 * 1024)).toFixed(2)}MB`);
       return;
     }
 
@@ -183,24 +183,60 @@ export default function Home() {
 
       setProgress('Sending to AI model...');
 
-      // Use a proxy API route instead of calling Replicate directly
-      const response = await fetch('/api/generate-animation', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          image: portraitBase64,
-          video: videoBase64
-        }),
-      });
+      // 添加重试逻辑
+      let attempts = 0;
+      const maxAttempts = 3;
+      let success = false;
+      let responseData;
+      let response;
 
-      const responseData = await response.json();
+      while (attempts < maxAttempts && !success) {
+        try {
+          attempts++;
+          if (attempts > 1) {
+            setProgress(`尝试第 ${attempts} 次发送到AI模型...`);
+          }
 
-      if (!response.ok) {
+          // Use a proxy API route instead of calling Replicate directly
+          response = await fetch('/api/generate-animation', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              image: portraitBase64,
+              video: videoBase64
+            }),
+          });
+
+          // 尝试以文本形式读取响应，然后解析为JSON
+          const responseText = await response.text();
+          
+          try {
+            responseData = JSON.parse(responseText);
+            success = true;
+          } catch (jsonError) {
+            console.error('解析响应JSON失败:', jsonError, '响应文本:', responseText);
+            if (attempts === maxAttempts) {
+              throw new Error(`解析响应失败: ${responseText.substring(0, 100)}...`);
+            }
+            // 如果不是最后一次尝试，等待后重试
+            await new Promise(resolve => setTimeout(resolve, 2000));
+          }
+        } catch (fetchError) {
+          console.error(`第 ${attempts} 次请求失败:`, fetchError);
+          if (attempts === maxAttempts) {
+            throw fetchError;
+          }
+          // 如果不是最后一次尝试，等待后重试
+          await new Promise(resolve => setTimeout(resolve, 2000));
+        }
+      }
+
+      if (!response?.ok) {
         // 显示详细错误信息
-        let errorMessage = `API request failed: ${response.statusText}`;
-        if (responseData.error) {
+        let errorMessage = `API request failed: ${response?.statusText || 'Unknown error'}`;
+        if (responseData?.error) {
           errorMessage = responseData.error;
         }
 
@@ -225,6 +261,7 @@ export default function Home() {
 
     } catch (err: any) {
       setError(`Error: ${err.message}`);
+      console.error('生成视频时出错:', err);
     } finally {
       setLoading(false);
     }
