@@ -9,9 +9,12 @@ export async function POST(request: Request) {
     const apiToken = process.env.REPLICATE_API_TOKEN;
     if (!apiToken) {
       console.error('REPLICATE_API_TOKEN未设置');
-      return NextResponse.json(
-        { error: 'Server configuration error: API token not set' },
-        { status: 500 }
+      return new NextResponse(
+        JSON.stringify({ error: 'Server configuration error: API token not set' }),
+        {
+          status: 500,
+          headers: { 'Content-Type': 'application/json' }
+        }
       );
     }
     
@@ -23,9 +26,12 @@ export async function POST(request: Request) {
       requestData = await request.json();
     } catch (e) {
       console.error('请求解析错误:', e);
-      return NextResponse.json(
-        { error: 'Failed to parse request data' },
-        { status: 400 }
+      return new NextResponse(
+        JSON.stringify({ error: 'Failed to parse request data' }),
+        {
+          status: 400,
+          headers: { 'Content-Type': 'application/json' }
+        }
       );
     }
     
@@ -33,18 +39,24 @@ export async function POST(request: Request) {
 
     if (!image || !video) {
       console.error('缺少图像或视频数据');
-      return NextResponse.json(
-        { error: 'Image and video are required' },
-        { status: 400 }
+      return new NextResponse(
+        JSON.stringify({ error: 'Image and video are required' }),
+        {
+          status: 400,
+          headers: { 'Content-Type': 'application/json' }
+        }
       );
     }
     
     // 检查文件大小
     if (image.length > MAX_BASE64_SIZE || video.length > MAX_BASE64_SIZE) {
       console.error('文件大小超出限制');
-      return NextResponse.json(
-        { error: 'File size exceeds the limit (20MB)' },
-        { status: 413 }
+      return new NextResponse(
+        JSON.stringify({ error: 'File size exceeds the limit (20MB)' }),
+        {
+          status: 413,
+          headers: { 'Content-Type': 'application/json' }
+        }
       );
     }
     
@@ -100,28 +112,58 @@ export async function POST(request: Request) {
         }
       }
       
-      return NextResponse.json(
-        { 
+      return new NextResponse(
+        JSON.stringify({ 
           error: `Replicate API error: ${response.statusText}`,
           details: errorDetail || 'No additional details available'
-        },
-        { status: response.status }
+        }),
+        {
+          status: response.status,
+          headers: { 'Content-Type': 'application/json' }
+        }
       );
     }
     
     // 成功处理
-    const prediction = await response.json();
-    console.log("成功获取预测结果:", prediction.id);
-    return NextResponse.json(prediction);
+    try {
+      const prediction = await response.json();
+      console.log("成功获取预测结果:", prediction.id);
+      return new NextResponse(
+        JSON.stringify(prediction),
+        {
+          status: 200,
+          headers: { 'Content-Type': 'application/json' }
+        }
+      );
+    } catch (jsonError) {
+      console.error('解析API响应失败:', jsonError);
+      
+      const responseText = await response.text();
+      console.error('响应文本内容:', responseText);
+      
+      return new NextResponse(
+        JSON.stringify({ 
+          error: 'Failed to parse API response',
+          details: responseText.substring(0, 500) // 限制响应文本长度
+        }),
+        {
+          status: 500,
+          headers: { 'Content-Type': 'application/json' }
+        }
+      );
+    }
     
   } catch (error: any) {
     console.error('服务器错误:', error);
-    return NextResponse.json(
-      { 
+    return new NextResponse(
+      JSON.stringify({ 
         error: `Server error: ${error.message}`,
         stack: process.env.NODE_ENV === 'development' ? error.stack : undefined 
-      },
-      { status: 500 }
+      }),
+      {
+        status: 500,
+        headers: { 'Content-Type': 'application/json' }
+      }
     );
   }
 } 
