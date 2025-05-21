@@ -1,15 +1,7 @@
 import { NextResponse } from 'next/server';
 
-// 设置更长的超时时间和更大的请求体积限制
-export const config = {
-  api: {
-    bodyParser: {
-      sizeLimit: '30mb' // 增加到30MB
-    },
-    responseLimit: false
-  },
-  maxDuration: 60 // 60秒超时
-};
+// 使用新的路由段配置
+export const maxDuration = 60;
 
 const MAX_BASE64_SIZE = 10 * 1024 * 1024; // 减少到10MB限制
 
