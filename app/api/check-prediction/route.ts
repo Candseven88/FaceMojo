@@ -65,18 +65,55 @@ export async function GET(request: NextRequest) {
         }
       }
       
-      return NextResponse.json(
-        { 
+      // 确保返回正确格式的错误响应
+      return new NextResponse(
+        JSON.stringify({ 
           error: `Replicate API error: ${response.statusText}`,
           details: errorDetail || 'No additional details available'
-        },
-        { status: response.status }
+        }),
+        { 
+          status: response.status,
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }
       );
     }
 
-    const prediction = await response.json();
-    console.log(`预测状态: ${prediction.status}`);
-    return NextResponse.json(prediction);
+    // 安全地解析响应
+    let prediction;
+    try {
+      prediction = await response.json();
+      console.log(`预测状态: ${prediction.status}`);
+      return new NextResponse(
+        JSON.stringify(prediction),
+        { 
+          status: 200,
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }
+      );
+    } catch (jsonError) {
+      console.error('解析JSON响应失败:', jsonError);
+      
+      // 尝试以文本形式读取响应内容
+      const responseText = await response.text();
+      console.error('响应文本内容:', responseText);
+      
+      return new NextResponse(
+        JSON.stringify({ 
+          error: 'Failed to parse API response',
+          details: responseText.substring(0, 500) // 限制响应文本长度
+        }),
+        { 
+          status: 500,
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }
+      );
+    }
   } catch (error: any) {
     console.error('服务器错误:', error);
     return NextResponse.json(
