@@ -3,15 +3,14 @@ import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 
-// 你的Firebase配置
-// 请替换为你的实际Firebase项目配置
+// Firebase配置使用环境变量
 const firebaseConfig = {
-  apiKey: "AIzaSyD3r97BabQ1M06tpQbuUGH70mNVALvc-Zc",
-  authDomain: "facemojo-ccb1b.firebaseapp.com",
-  projectId: "facemojo-ccb1b",
-  storageBucket: "facemojo-ccb1b.firebasestorage.app",
-  messagingSenderId: "7085206135",
-  appId: "1:7085206135:web:b4ec995e9b3c70e201f472"
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID
 };
 
 // 初始化Firebase
