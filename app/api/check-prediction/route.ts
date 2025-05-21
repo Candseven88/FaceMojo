@@ -2,13 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export const dynamic = 'force-dynamic'; // 指定这是一个动态API路由
 
-// 设置更长的超时时间
-export const config = {
-  api: {
-    responseLimit: false
-  },
-  maxDuration: 60 // 60秒超时
-};
+// 使用新的路由段配置
+export const maxDuration = 60;
 
 export async function GET(request: NextRequest) {
   console.log("API请求开始: check-prediction");
