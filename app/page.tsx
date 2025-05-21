@@ -248,24 +248,53 @@ export default function Home() {
 
   // Poll prediction until complete
   const pollPrediction = async (id: string): Promise<PredictionResponse> => {
-    const response = await fetch(`/api/check-prediction?id=${id}`);
+    try {
+      const response = await fetch(`/api/check-prediction?id=${id}`);
 
-    if (!response.ok) {
-      throw new Error(`Polling failed: ${response.statusText}`);
+      if (!response.ok) {
+        let errorMessage = `Polling failed: ${response.statusText}`;
+        try {
+          // 尝试解析JSON响应
+          const errorData = await response.json();
+          if (errorData.error) {
+            errorMessage = errorData.error;
+          }
+        } catch (e) {
+          // 如果不是JSON，尝试以文本形式读取
+          try {
+            const textError = await response.text();
+            errorMessage = textError || errorMessage;
+          } catch (textError) {
+            // 如果文本也读取失败，使用默认错误信息
+            console.error('无法读取错误响应文本:', textError);
+          }
+        }
+        throw new Error(errorMessage);
+      }
+
+      // 添加错误处理来安全地解析JSON
+      let prediction: PredictionResponse;
+      try {
+        prediction = await response.json();
+      } catch (error) {
+        console.error('解析JSON响应失败:', error);
+        throw new Error('无法解析服务器响应，请稍后再试');
+      }
+
+      if (prediction.status === 'succeeded') {
+        return prediction;
+      } else if (prediction.status === 'failed') {
+        throw new Error(prediction.error || 'Processing failed');
+      }
+
+      // Continue polling
+      setProgress(`Processing (status: ${prediction.status})...`);
+      await new Promise(resolve => setTimeout(resolve, 3000)); // Wait 3 seconds
+      return pollPrediction(id);
+    } catch (error: any) {
+      console.error('轮询过程中出错:', error);
+      throw error;
     }
-
-    const prediction: PredictionResponse = await response.json();
-
-    if (prediction.status === 'succeeded') {
-      return prediction;
-    } else if (prediction.status === 'failed') {
-      throw new Error(prediction.error || 'Processing failed');
-    }
-
-    // Continue polling
-    setProgress(`Processing (status: ${prediction.status})...`);
-    await new Promise(resolve => setTimeout(resolve, 3000)); // Wait 3 seconds
-    return pollPrediction(id);
   };
 
   // Custom file upload trigger
