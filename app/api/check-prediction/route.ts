@@ -2,6 +2,14 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export const dynamic = 'force-dynamic'; // 指定这是一个动态API路由
 
+// 设置更长的超时时间
+export const config = {
+  api: {
+    responseLimit: false
+  },
+  maxDuration: 60 // 60秒超时
+};
+
 export async function GET(request: NextRequest) {
   console.log("API请求开始: check-prediction");
   try {
@@ -116,12 +124,15 @@ export async function GET(request: NextRequest) {
     }
   } catch (error: any) {
     console.error('服务器错误:', error);
-    return NextResponse.json(
-      { 
+    return new NextResponse(
+      JSON.stringify({ 
         error: `Server error: ${error.message}`,
         stack: process.env.NODE_ENV === 'development' ? error.stack : undefined 
-      },
-      { status: 500 }
+      }),
+      {
+        status: 500,
+        headers: { 'Content-Type': 'application/json' }
+      }
     );
   }
 } 
